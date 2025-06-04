@@ -272,6 +272,7 @@ MonoBehaviour:
   _canvas: {fileID: 795363687}
   _inventoryItemSOs:
   - {fileID: 11400000, guid: 2bdbfbd86338741739ed40c8879e82c7, type: 2}
+  - {fileID: 11400000, guid: 116a862b08d23483c92693a981c1a041, type: 2}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
