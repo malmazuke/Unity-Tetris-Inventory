@@ -5,6 +5,8 @@ public class InventoryController : MonoBehaviour
 {
     private ItemGrid _selectedItemGrid;
     public event Action<ItemGrid> OnSelectedGridChanged;
+    
+    private InventoryItem _selectedItem;
 
     private void Update()
     {
@@ -13,7 +15,17 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log(_selectedItemGrid.GetTileGridPosition(Input.mousePosition));   
+            var positionOnGrid = _selectedItemGrid.GetTileGridPosition(Input.mousePosition);
+
+            if (_selectedItem == false)
+            {
+                _selectedItem = _selectedItemGrid.PickUpItem(positionOnGrid.x, positionOnGrid.y);;
+            }
+            else
+            {
+                _selectedItemGrid.PlaceItem(_selectedItem, positionOnGrid.x, positionOnGrid.y);
+                _selectedItem = null;
+            }
         }
     }
     

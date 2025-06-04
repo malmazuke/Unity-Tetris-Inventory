@@ -44,6 +44,7 @@ public class ItemGrid : MonoBehaviour
         return tileGridPosition;
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public void PlaceItem(InventoryItem item, int x, int y)
     {
         var rectTransform = item.GetComponent<RectTransform>();
@@ -57,5 +58,11 @@ public class ItemGrid : MonoBehaviour
         };
         rectTransform.localPosition = position;
     }
-    
+
+    public InventoryItem PickUpItem(int x, int y)
+    {
+        var item = _inventoryItemSlot[x, y];
+        _inventoryItemSlot[x, y] = null;
+        return item;
+    }
 }
