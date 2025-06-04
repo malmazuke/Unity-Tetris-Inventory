@@ -7,9 +7,15 @@ public class InventoryController : MonoBehaviour
     public event Action<ItemGrid> OnSelectedGridChanged;
     
     private InventoryItem _selectedItem;
+    private RectTransform _selectedItemTransform;
 
     private void Update()
     {
+        if (_selectedItem)
+        {
+            _selectedItemTransform.position = Input.mousePosition;
+        }
+
         if (_selectedItemGrid == false)
             return;
 
@@ -20,6 +26,11 @@ public class InventoryController : MonoBehaviour
             if (_selectedItem == false)
             {
                 _selectedItem = _selectedItemGrid.PickUpItem(positionOnGrid.x, positionOnGrid.y);;
+                if (_selectedItem)
+                {
+                    // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+                    _selectedItemTransform = _selectedItem.GetComponent<RectTransform>();
+                }
             }
             else
             {
