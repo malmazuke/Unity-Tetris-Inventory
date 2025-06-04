@@ -3,6 +3,7 @@ using UnityEngine;
 public class ItemGrid : MonoBehaviour
 {
     [SerializeField] private Vector2Int _gridSize = new Vector2Int(10, 10);
+    [SerializeField] private GameObject _itemPrefab;
 
     private const float TileSizeWidth = 32f;
     private const float TileSizeHeight = 32f;
@@ -15,6 +16,8 @@ public class ItemGrid : MonoBehaviour
     {
         _rectTransform = GetComponent<RectTransform>();
         InitialiseGrid(_gridSize.x, _gridSize.y);
+        var item = Instantiate(_itemPrefab, _rectTransform).GetComponent<InventoryItem>();;
+        PlaceItem(item, 3, 2);
     }
 
     private void InitialiseGrid(int width, int height)
@@ -40,4 +43,19 @@ public class ItemGrid : MonoBehaviour
 
         return tileGridPosition;
     }
+
+    public void PlaceItem(InventoryItem item, int x, int y)
+    {
+        var rectTransform = item.GetComponent<RectTransform>();
+        rectTransform.SetParent(_rectTransform);
+        _inventoryItemSlot[x, y] = item;
+        
+        var position = new Vector2
+        {
+            x = x * TileSizeWidth + TileSizeWidth / 2f,
+            y = -(y * TileSizeHeight + TileSizeHeight / 2f)
+        };
+        rectTransform.localPosition = position;
+    }
+    
 }

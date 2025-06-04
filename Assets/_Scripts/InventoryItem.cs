@@ -2,15 +2,5 @@ using UnityEngine;
 
 public class InventoryItem : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private Vector2Int _size = new Vector2Int(1, 1);
 }
