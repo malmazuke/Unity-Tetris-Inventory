@@ -1,14 +1,29 @@
+using System;
 using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
-    [SerializeField] private ItemGrid selectedItemGrid;
+    private ItemGrid _selectedItemGrid;
+    public event Action<ItemGrid> OnSelectedGridChanged;
 
     private void Update()
     {
-        if (selectedItemGrid == false)
+        if (_selectedItemGrid == false)
             return;
         
-        Debug.Log(selectedItemGrid.GetTileGridPosition(Input.mousePosition));
+        Debug.Log(_selectedItemGrid.GetTileGridPosition(Input.mousePosition));
+    }
+    
+    public ItemGrid SelectedItemGrid
+    {
+        get => _selectedItemGrid;
+        set
+        {
+            if (_selectedItemGrid == value)
+                return;
+            
+            _selectedItemGrid = value;
+            OnSelectedGridChanged?.Invoke(value);
+        }
     }
 }
