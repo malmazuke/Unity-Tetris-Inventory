@@ -10,8 +10,11 @@ public class InventoryController : MonoBehaviour
     {
         if (_selectedItemGrid == false)
             return;
-        
-        Debug.Log(_selectedItemGrid.GetTileGridPosition(Input.mousePosition));
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log(_selectedItemGrid.GetTileGridPosition(Input.mousePosition));   
+        }
     }
     
     public ItemGrid SelectedItemGrid
