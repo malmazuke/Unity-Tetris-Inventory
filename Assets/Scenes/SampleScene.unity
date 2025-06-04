@@ -269,6 +269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f66e0492b7f744d899cedd16be4d2b62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvas: {fileID: 795363687}
+  _inventoryItemSOs:
+  - {fileID: 11400000, guid: 2bdbfbd86338741739ed40c8879e82c7, type: 2}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0

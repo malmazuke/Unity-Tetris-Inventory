@@ -1,6 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(RectTransform))]
+[RequireComponent(typeof(Image))]
 public class InventoryItem : MonoBehaviour
 {
-    [SerializeField] private Vector2Int _size = new Vector2Int(1, 1);
+    // ReSharper disable Unity.PerformanceAnalysis
+    public void Init(InventoryItemSO itemSO)
+    {
+        ItemSO = itemSO;
+        GetComponent<Image>().sprite = itemSO.Icon;
+    }
+
+    public InventoryItemSO ItemSO { get; private set; }
 }
