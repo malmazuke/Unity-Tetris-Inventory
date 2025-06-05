@@ -12,6 +12,8 @@ public class InventoryController : MonoBehaviour
     
     private InventoryItem _selectedItem;
     private RectTransform _selectedItemTransform;
+    
+    
 
     private void Update()
     {
@@ -36,7 +38,7 @@ public class InventoryController : MonoBehaviour
     {
         var itemSO = _inventoryItemSOs[Random.Range(0, _inventoryItemSOs.Count)];
         var newItem = Instantiate(itemSO.Prefab).GetComponent<InventoryItem>();
-        newItem.Init(itemSO);
+        newItem.Init(itemSO, _selectedItemGrid.GridTileSize);
         if (_selectedItem)
         {
             Destroy(_selectedItem);

@@ -4,6 +4,7 @@ public class ItemGrid : MonoBehaviour
 {
     [SerializeField] private Vector2Int _gridSize = new Vector2Int(10, 10);
     [SerializeField] private GameObject _itemPrefab;
+    public Vector2 GridTileSize => new  Vector2(TileSizeWidth, TileSizeHeight);
 
     private const float TileSizeWidth = 32f;
     private const float TileSizeHeight = 32f;
@@ -11,6 +12,8 @@ public class ItemGrid : MonoBehaviour
     private RectTransform _rectTransform;
 
     private InventoryItem[,] _inventoryItemSlot;
+    
+    
 
     private void Start()
     {
@@ -51,8 +54,8 @@ public class ItemGrid : MonoBehaviour
         
         var position = new Vector2
         {
-            x = x * TileSizeWidth + TileSizeWidth / 2f,
-            y = -(y * TileSizeHeight + TileSizeHeight / 2f)
+            x = x * TileSizeWidth + TileSizeWidth * item.Size.x / 2f,
+            y = -(y * TileSizeHeight + TileSizeHeight * item.Size.y / 2f)
         };
         rectTransform.localPosition = position;
     }

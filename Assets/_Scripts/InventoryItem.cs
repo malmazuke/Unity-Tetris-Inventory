@@ -6,11 +6,18 @@ using UnityEngine.UI;
 public class InventoryItem : MonoBehaviour
 {
     // ReSharper disable Unity.PerformanceAnalysis
-    public void Init(InventoryItemSO itemSO)
+    public void Init(InventoryItemSO itemSO, Vector2 gridTileSize)
     {
         ItemSO = itemSO;
         GetComponent<Image>().sprite = itemSO.Icon;
+        GetComponent<RectTransform>().sizeDelta = new Vector2
+        {
+            x = gridTileSize.x * itemSO.Size.x,
+            y = gridTileSize.y * itemSO.Size.y
+        };
     }
+    
+    public Vector2Int Size => ItemSO.Size;
 
-    public InventoryItemSO ItemSO { get; private set; }
+    private InventoryItemSO ItemSO { get; set; }
 }
