@@ -12,18 +12,16 @@ public class InventoryController : MonoBehaviour
     
     private InventoryItem _selectedItem;
     private RectTransform _selectedItemTransform;
-    
-    
 
     private void Update()
     {
         UpdateDraggingItem();
-
+        
         if (Input.GetKeyDown(KeyCode.Q))
         {
             CreateRandomItem();
         }
-        
+
         if (_selectedItemGrid == false)
             return;
 
@@ -34,16 +32,16 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void CreateRandomItem()
     {
         var itemSO = _inventoryItemSOs[Random.Range(0, _inventoryItemSOs.Count)];
         var newItem = Instantiate(itemSO.Prefab).GetComponent<InventoryItem>();
-        newItem.Init(itemSO, _selectedItemGrid.GridTileSize);
+        
+        newItem.Init(itemSO, ItemGrid.GridTileSize);
         if (_selectedItem)
         {
-            Destroy(_selectedItem.gameObject);
-            _selectedItem = null;
-            _selectedItemTransform = null;
+            DestroySelectedItem();
         }
         
         _selectedItem = newItem;
@@ -69,18 +67,22 @@ public class InventoryController : MonoBehaviour
 
     private void PlaceItem(Vector2Int positionOnGrid)
     {
-        _selectedItemGrid.PlaceItem(_selectedItem, positionOnGrid.x, positionOnGrid.y);
-        _selectedItem = null;
+        if (_selectedItemGrid.PlaceItem(_selectedItem, positionOnGrid.x, positionOnGrid.y))
+        {
+            _selectedItem = null;
+            _selectedItemTransform = null;
+        }
     }
 
     private void PickUpItem(Vector2Int positionOnGrid)
     {
-        _selectedItem = _selectedItemGrid.PickUpItem(positionOnGrid.x, positionOnGrid.y);;
-        if (_selectedItem)
-        {
-            // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-            _selectedItemTransform = _selectedItem.GetComponent<RectTransform>();
-        }
+        var pickedUpItem = _selectedItemGrid.PickUpItem(positionOnGrid.x, positionOnGrid.y);
+        if (!pickedUpItem) return;
+        
+        _selectedItem = pickedUpItem;
+        // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+        _selectedItemTransform = _selectedItem.GetComponent<RectTransform>();
+        _selectedItemTransform.SetParent(_canvas.transform);
     }
 
     private void UpdateDraggingItem()
@@ -103,4 +105,12 @@ public class InventoryController : MonoBehaviour
             OnSelectedGridChanged?.Invoke(value);
         }
     }
+
+    private void DestroySelectedItem()
+    {
+        Destroy(_selectedItem.gameObject);
+        _selectedItem = null;
+        _selectedItemTransform = null;
+    }
+    
 }
