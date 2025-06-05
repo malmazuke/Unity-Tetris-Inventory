@@ -41,7 +41,8 @@ public class InventoryController : MonoBehaviour
         newItem.Init(itemSO, _selectedItemGrid.GridTileSize);
         if (_selectedItem)
         {
-            Destroy(_selectedItem);
+            Destroy(_selectedItem.gameObject);
+            _selectedItem = null;
             _selectedItemTransform = null;
         }
         
